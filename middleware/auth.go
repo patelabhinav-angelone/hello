@@ -19,7 +19,7 @@ func getJWTSecret() string {
 	return secret
 }
 
-// GenerateToken generates a JWT for the given userId
+// generates a JWT for the given userId
 func GenerateToken(userID uint) (string, error) {
 	claim := jwt.MapClaims{
 		"user_id": userID,
@@ -71,7 +71,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		//set user id in context
+		//set userid
 
 		userIDFloat, ok := claim["user_id"].(float64)
 		if !ok {
