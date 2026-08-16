@@ -30,25 +30,3 @@ func GetUserByID(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data": user})
 }
-
-func CreateUser(c *gin.Context) {
-	var input models.CreateUser
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Validation failed", "details": err.Error()})
-		return
-	}
-	user := models.User{
-		Name:     input.Name,
-		Password: input.Password,
-		EmailID:  input.EmailID,
-		Age:      input.Age,
-	}
-	res := config.DB.Create(&user)
-	if res.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "unable to create user"})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"message": "user created successfully",
-		"Data":    user})
-}
