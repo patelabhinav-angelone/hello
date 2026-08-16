@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"hello/config"
-	"hello/models"
 	"hello/router"
 
 	"github.com/joho/godotenv"
@@ -17,12 +15,6 @@ func main() {
 	}
 
 	config.ConnectDatabase()
-
-	err := config.DB.AutoMigrate(&models.User{})
-	if err != nil {
-		fmt.Println("Error migrating database:", err)
-	}
-	log.Println("Database migration completed successfully")
 
 	r := router.SetupRouter()
 	log.Println("Starting server on port 8080...")
