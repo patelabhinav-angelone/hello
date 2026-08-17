@@ -36,5 +36,5 @@ type Tweet struct {
 }
 
 type CreateTweet struct {
-	Content string `json:"content" binding:"required,max=280"`
+	Content string `json:"content" binding:"required,max=280,min=1"`
 }

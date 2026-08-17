@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -17,6 +18,14 @@ func CreateTweet(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "Invalid input",
 			"details": err.Error(),
+		})
+		return
+	}
+
+	if strings.TrimSpace(input.Content) == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Invalid input",
+			"details": "content cannot be empty or contain only whitespace",
 		})
 		return
 	}
