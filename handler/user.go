@@ -71,3 +71,4 @@ func CreateUser(c *gin.Context) {
 		"data":    user,
 	})
 }
+

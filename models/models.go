@@ -18,7 +18,7 @@ type CreateUser struct {
 	Name     string `json:"name" binding:"required"`
 	Password string `json:"password" binding:"required"`
 	EmailID  string `json:"email" binding:"required,email"`
-	Age      int    `json:"age" binding:"gte=0"`
+	Age      int    `json:"age" binding:"gte=0,lte=150"`
 }
 
 type RegisterUser struct {
