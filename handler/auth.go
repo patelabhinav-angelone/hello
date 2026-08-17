@@ -1,15 +1,19 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgconn"
 	"golang.org/x/crypto/bcrypt"
 
 	"hello/config"
 	"hello/middleware"
 	"hello/models"
 )
+
+const pgUniqueViolation = "23505"
 
 func Register(c *gin.Context) {
 	var input models.RegisterUser
@@ -37,6 +41,11 @@ func Register(c *gin.Context) {
 	}
 	res := config.DB.Create(&user)
 	if res.Error != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(res.Error, &pgErr) && pgErr.Code == pgUniqueViolation {
+			c.JSON(http.StatusConflict, gin.H{"error": "user already exists"})
+			return
+		}
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "unable to create user"})
 		return
 	}

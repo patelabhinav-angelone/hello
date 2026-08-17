@@ -2,6 +2,7 @@ package router
 
 import (
 	"hello/handler"
+	"hello/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +26,13 @@ func SetupRouter() *gin.Engine {
 	{
 		p.GET("/users", handler.GetAllUsers)
 		p.GET("/users/:id", handler.GetUserByID)
-		p.POST("/users", handler.CreateUser)
+	}
+
+	tweets := r.Group("/api/tweets")
+	{
+		tweets.GET("", handler.GetAllTweets)
+		tweets.GET("/:id", handler.GetTweetByID)
+		tweets.POST("", middleware.AuthMiddleware(), handler.CreateTweet)
 	}
 	return r
 }

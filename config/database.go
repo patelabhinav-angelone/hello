@@ -7,6 +7,8 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
+	"hello/models"
 )
 
 var DB *gorm.DB
@@ -24,4 +26,8 @@ func ConnectDatabase() {
 	}
 	DB = db
 	log.Println("Database connection established")
+
+	if err := DB.AutoMigrate(&models.User{}, &models.Tweet{}); err != nil {
+		log.Fatal("Failed to migrate database:", err)
+	}
 }

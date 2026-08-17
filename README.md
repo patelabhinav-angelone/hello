@@ -45,3 +45,6 @@ The server starts on `http://localhost:8080`.
 | POST   | `/api/auth/login`   | Log in               |
 | GET    | `/api/users`        | List all users       |
 | GET    | `/api/users/:id`    | Get a user by ID     |
+| GET    | `/api/tweets`       | List all tweets      |
+| GET    | `/api/tweets/:id`   | Get a tweet by ID    |
+| POST   | `/api/tweets`       | Create a tweet (requires `Authorization: Bearer <token>`) |
