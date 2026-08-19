@@ -30,7 +30,8 @@ type Tweet struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`
 	Content   string    `json:"content" gorm:"not null"`
 	UserID    uint      `json:"user_id" gorm:"not null;index"`
-	User      User      `json:"user,omitempty"`
+	User      User      `json:"-"`
+	Username  string    `json:"username" gorm:"-"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
