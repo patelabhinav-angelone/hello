@@ -26,29 +26,29 @@ export interface AuthResponse {
 
 function getToken(): string | null {
 	if (browser) {
-		return localStorage.getItem('token');
+		return sessionStorage.getItem('token');
 	}
 	return null;
 }
 
 function getUserId(): string | null {
 	if (browser) {
-		return localStorage.getItem('user_id');
+		return sessionStorage.getItem('user_id');
 	}
 	return null;
 }
 
 function setToken(token: string, userId: number): void {
 	if (browser) {
-		localStorage.setItem('token', token);
-		localStorage.setItem('user_id', userId.toString());
+		sessionStorage.setItem('token', token);
+		sessionStorage.setItem('user_id', userId.toString());
 	}
 }
 
 function clearToken(): void {
 	if (browser) {
-		localStorage.removeItem('token');
-		localStorage.removeItem('user_id');
+		sessionStorage.removeItem('token');
+		sessionStorage.removeItem('user_id');
 	}
 }
 

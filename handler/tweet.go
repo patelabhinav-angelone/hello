@@ -95,9 +95,9 @@ func GetTweetsByUserID(c *gin.Context) {
 }
 
 func UpdateTweet(c *gin.Context) {
-	userID, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user id"})
+	authUserID, ok := c.Get("user_id")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unable to determine user"})
 		return
 	}
 
@@ -131,7 +131,7 @@ func UpdateTweet(c *gin.Context) {
 		return
 	}
 
-	if tweet.UserID != uint(userID) {
+	if tweet.UserID != authUserID.(uint) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "you are not authorized to update this tweet"})
 		return
 	}
@@ -151,9 +151,9 @@ func UpdateTweet(c *gin.Context) {
 }
 
 func DeleteTweet(c *gin.Context) {
-	userID, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user id"})
+	authUserID, ok := c.Get("user_id")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unable to determine user"})
 		return
 	}
 
@@ -170,7 +170,7 @@ func DeleteTweet(c *gin.Context) {
 		return
 	}
 
-	if tweet.UserID != uint(userID) {
+	if tweet.UserID != authUserID.(uint) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "you are not authorized to delete this tweet"})
 		return
 	}
